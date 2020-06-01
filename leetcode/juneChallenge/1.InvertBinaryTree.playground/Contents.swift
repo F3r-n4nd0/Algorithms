@@ -35,23 +35,20 @@ public class TreeNode {
 }
 
 extension TreeNode {
-    
-    func inverse() {
+
+    func invert() {
         let lastLeft = self.left
         self.left = right
         self.right = lastLeft
-        self.left?.inverse()
-        self.right?.inverse()
+        self.left?.invert()
+        self.right?.invert()
     }
     
 }
 
 class Solution {
-    
     func invertTree(_ root: TreeNode?) -> TreeNode? {
-        root?.inverse()
+        root?.invert()
         return root
     }
-    
 }
-
