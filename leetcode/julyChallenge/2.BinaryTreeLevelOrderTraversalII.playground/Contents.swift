@@ -24,26 +24,26 @@ public class TreeNode {
 class Solution {
     
     func levelOrderBottom(_ root: TreeNode?) -> [[Int]] {
-         var res = levelOrder(root)
-         res.reverse()
-         return res
-     }
-     
-     private func levelOrder(_ node: TreeNode?) -> [[Int]] {
-         guard let node = node else {
-             return []
-         }
-         let left = levelOrder(node.left)
-         let right = levelOrder(node.right)
-         var result = [[Int]]()
-         result.append([node.val])
-         for i in 0..<Swift.max(left.count, right.count) {
-             let l = i < left.count  ? left[i] : []
-             let r = i < right.count  ? right[i] : []
-             result.append(l+r)
-         }
-         return result
-     }
+        var res = levelOrder(root)
+        res.reverse()
+        return res
+    }
+    
+    private func levelOrder(_ node: TreeNode?) -> [[Int]] {
+        guard let node = node else {
+            return []
+        }
+        let left = levelOrder(node.left)
+        let right = levelOrder(node.right)
+        var result = [[Int]]()
+        result.append([node.val])
+        for i in 0..<Swift.max(left.count, right.count) {
+            let l = i < left.count  ? left[i] : []
+            let r = i < right.count  ? right[i] : []
+            result.append(l+r)
+        }
+        return result
+    }
     
 }
 
@@ -64,17 +64,35 @@ class Solution2 {
             
         }
         return result
-     }
+    }
+    
+}
+
+class Solution3 {
+    
+    func levelOrderBottom(_ root: TreeNode?) -> [[Int]] {
+        var res = [[Int]]();
+        guard let root = root else{ return res }
+        levelOrder(root, 0, &res)
+        return res.reversed()
+    }
+    
+    private func levelOrder(_ node: TreeNode,_ depth: Int, _ result: inout [[Int]]) {
+        if depth >= result.count { result.append([Int]()) }
+        result[depth].append(node.val)
+        if let left = node.left { levelOrder(left, depth+1,&result) }
+        if let right = node.right { levelOrder(right, depth+1,&result) }
+    }
     
 }
 
 class SolutionTests: XCTestCase {
     
-    var solution: Solution2!
+    var solution: Solution3!
     
     override func setUp() {
         super.setUp()
-        solution = Solution2()
+        solution = Solution3()
     }
     
     func testExampleOne() {
@@ -82,7 +100,7 @@ class SolutionTests: XCTestCase {
             [15,7],
             [9,20],
             [3]
-          ])
+        ])
     }
     
 }
