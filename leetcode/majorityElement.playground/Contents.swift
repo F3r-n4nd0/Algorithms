@@ -30,23 +30,24 @@ class Solution {
 class Solution2 {
     func majorityElement(_ nums: [Int]) -> Int {
         guard nums.count > 0 else {  return 0 }
-        let n = nums.count / 2
-        if n == 0  && nums.count > 0 { return nums.max() ?? 0 }
-        var output = Int.min
-        var hashTable = [Int:Int]()
-        for num in nums {
-            hashTable[num, default: 0] += 1
-            if let val = hashTable[num], val > n {
-                if num > output { output = num }
+        var output = nums[0]
+        var count = 1
+        for i in 1..<nums.count {
+            if count == 0 {
+                output = nums[i]
+                count = 1
+                continue
             }
+            count += output == nums[i] ? 1 : -1
         }
         return output
     }
 }
 
+
 class SolutionTests: XCTestCase {
     
-    var solution = Solution()
+    var solution = Solution2()
     
     func testExampleOne() {
         XCTAssertEqual(solution.majorityElement([3,2,3]), 3)
