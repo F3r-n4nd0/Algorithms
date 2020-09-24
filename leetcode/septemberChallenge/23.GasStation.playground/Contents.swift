@@ -47,19 +47,18 @@ class Solution {
 class Solution2 {
     
     func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
-        let stationCount = gas.count
-        var startingStation = 0, gasSurplus = 0, gasDeficit = 0
-        for i in 0..<stationCount {
-            let tankBalance = gas[i] - cost[i]
-            if tankBalance + gasSurplus >= 0 {
-                gasSurplus += tankBalance
-            } else {
-                startingStation = i + 1
-                gasDeficit += tankBalance + gasSurplus
-                gasSurplus = 0
+        let n = gas.count
+        var index = 0, gasTank = 0, sum = 0
+        for i in 0..<n {
+            let currenDiff = gas[i] - cost[i]
+            gasTank += currenDiff
+            sum += currenDiff
+            if gasTank < 0 {
+                index = i + 1
+                gasTank = 0
             }
         }
-        return (gasSurplus + gasDeficit >= 0) ? startingStation : -1
+        return (sum >= 0) ? index : -1
     }
     
 }
