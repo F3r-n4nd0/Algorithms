@@ -40,14 +40,14 @@ class Solution {
     }
     
     private func mergeTwoLists(_ listA: ListNode?, _ listB: ListNode?) -> ListNode? {
-        guard let pointerA = listA else { return listB }
-        guard let pointerB = listB else { return listA }
-        if pointerA.val > pointerB.val {
-            pointerB.next = mergeTwoLists(listA, listB?.next)
-            return pointerB
+        guard let headA = listA else { return listB }
+        guard let headB = listB else { return listA }
+        if headA.val > headB.val {
+            headB.next = mergeTwoLists(listA, headB.next)
+            return headB
         }
-        pointerA.next = mergeTwoLists(listA?.next, listB)
-        return pointerA
+        headA.next = mergeTwoLists(listA?.next, listB)
+        return headA
     }
     
 }
